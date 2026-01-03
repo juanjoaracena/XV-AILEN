@@ -1,0 +1,616 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Invitación XV Ailén</title>
+  <meta name="description" content="Invitación interactiva para los XV de Ailén" />
+  <style>
+    :root{
+      --bg1:#061025;
+      --bg2:#0c2a4d;
+      --card:#ffffff;
+      --ink:#0f172a;
+      --muted:#475569;
+      --accent:#7dd3fc;
+      --accent2:#60a5fa;
+      --shadow: 0 22px 60px rgba(0,0,0,.35);
+      --radius: 22px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif;
+      color:#e2e8f0;
+      background:
+        radial-gradient(900px 500px at 20% 20%, rgba(125,211,252,.18), transparent 60%),
+        radial-gradient(900px 500px at 80% 30%, rgba(96,165,250,.16), transparent 60%),
+        linear-gradient(160deg, var(--bg1), var(--bg2));
+      overflow-x:hidden;
+    }
+
+    /* sparkles */
+    .stars{
+      position:fixed; inset:0;
+      pointer-events:none;
+      opacity:.75;
+      background-image:
+        radial-gradient(1px 1px at 12% 22%, rgba(255,255,255,.85) 50%, transparent 52%),
+        radial-gradient(1px 1px at 37% 70%, rgba(255,255,255,.65) 50%, transparent 52%),
+        radial-gradient(1px 1px at 62% 18%, rgba(255,255,255,.7) 50%, transparent 52%),
+        radial-gradient(1.2px 1.2px at 83% 56%, rgba(255,255,255,.8) 50%, transparent 52%),
+        radial-gradient(1px 1px at 72% 82%, rgba(255,255,255,.6) 50%, transparent 52%),
+        radial-gradient(1px 1px at 18% 84%, rgba(255,255,255,.7) 50%, transparent 52%);
+      background-repeat:no-repeat;
+      filter: drop-shadow(0 0 6px rgba(255,255,255,.15));
+      animation: twinkle 6s ease-in-out infinite alternate;
+    }
+    @keyframes twinkle{
+      from{opacity:.55; transform: translateY(0)}
+      to{opacity:.9; transform: translateY(-6px)}
+    }
+
+    .wrap{
+      min-height:100%;
+      display:grid;
+      place-items:center;
+      padding:28px 14px 48px;
+    }
+
+    .topbar{
+      width:min(980px, 100%);
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:10px;
+      margin: 0 auto 16px;
+      opacity:.95;
+    }
+    .pill{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      padding:10px 12px;
+      border:1px solid rgba(255,255,255,.16);
+      border-radius:999px;
+      backdrop-filter: blur(10px);
+      background: rgba(255,255,255,.06);
+    }
+    .pill strong{font-weight:650}
+    .btn{
+      border:1px solid rgba(255,255,255,.22);
+      color:#e2e8f0;
+      background: rgba(255,255,255,.08);
+      padding:10px 12px;
+      border-radius:999px;
+      cursor:pointer;
+      transition: transform .12s ease, background .2s ease;
+      user-select:none;
+    }
+    .btn:hover{transform: translateY(-1px); background: rgba(255,255,255,.12)}
+    .btn:active{transform: translateY(0px); background: rgba(255,255,255,.09)}
+    .btn.small{padding:8px 10px; font-size:14px}
+
+    .stage{
+      width:min(980px, 100%);
+      display:grid;
+      grid-template-columns: 1fr;
+      gap:18px;
+      align-items:center;
+      justify-items:center;
+    }
+
+    .hint{
+      max-width: 780px;
+      text-align:center;
+      color: rgba(226,232,240,.9);
+      line-height:1.35;
+      font-size: 15px;
+    }
+    .hint b{color:#fff}
+
+    /* Envelope */
+    .envelope{
+      width:min(520px, 100%);
+      aspect-ratio: 16/11;
+      position:relative;
+      border-radius: var(--radius);
+      filter: drop-shadow(0 18px 30px rgba(0,0,0,.35));
+      cursor:pointer;
+      transform: translateZ(0);
+    }
+    .env-base{
+      position:absolute; inset:0;
+      border-radius: var(--radius);
+      background: linear-gradient(180deg, rgba(255,255,255,.12), rgba(255,255,255,.05));
+      border:1px solid rgba(255,255,255,.18);
+      backdrop-filter: blur(10px);
+    }
+    .env-paper{
+      position:absolute;
+      left: 6%;
+      right: 6%;
+      bottom: 6%;
+      height: 82%;
+      background: rgba(255,255,255,.14);
+      border:1px solid rgba(255,255,255,.18);
+      border-radius: calc(var(--radius) - 8px);
+      transform-origin: bottom;
+      transform: translateY(0);
+      overflow:hidden;
+    }
+    .env-paper::before{
+      content:"";
+      position:absolute; inset:-2px;
+      background:
+        radial-gradient(500px 220px at 50% 0%, rgba(125,211,252,.22), transparent 60%),
+        radial-gradient(360px 200px at 30% 70%, rgba(96,165,250,.16), transparent 60%);
+      opacity:.9;
+    }
+    .env-front{
+      position:absolute; inset:0;
+      border-radius: var(--radius);
+      overflow:hidden;
+    }
+    .env-front::before{
+      content:"";
+      position:absolute; inset:0;
+      background:
+        linear-gradient(135deg, rgba(125,211,252,.18), rgba(255,255,255,.04)),
+        radial-gradient(700px 380px at 20% 40%, rgba(96,165,250,.20), transparent 65%);
+      opacity:1;
+    }
+    .flap{
+      position:absolute;
+      left: 0; right: 0;
+      top: 0;
+      height: 62%;
+      transform-origin: top;
+      transform: rotateX(0deg);
+      transition: transform .85s cubic-bezier(.2,.85,.1,1);
+      pointer-events:none;
+    }
+    .flap svg{width:100%; height:100%}
+    .seal{
+      position:absolute;
+      left:50%; top:52%;
+      transform: translate(-50%,-50%);
+      width: 86px; height: 86px;
+      border-radius: 999px;
+      display:grid; place-items:center;
+      background: radial-gradient(circle at 30% 30%, rgba(255,255,255,.3), rgba(255,255,255,.09));
+      border: 1px solid rgba(255,255,255,.22);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 10px 24px rgba(0,0,0,.25);
+      transition: transform .25s ease, opacity .2s ease;
+    }
+    .seal span{
+      font-weight: 750;
+      letter-spacing: .08em;
+      font-size: 12px;
+      color: rgba(226,232,240,.95);
+    }
+
+    .open .flap{ transform: rotateX(165deg); }
+    .open .seal{ transform: translate(-50%,-50%) scale(.92); opacity:.55; }
+
+    /* Invitation card */
+    .card{
+      width:min(760px, 100%);
+      background: rgba(255,255,255,.92);
+      color: var(--ink);
+      border-radius: 28px;
+      box-shadow: var(--shadow);
+      overflow:hidden;
+      border: 1px solid rgba(15,23,42,.08);
+      display:none;
+    }
+    .card.show{display:block; animation: rise .65s cubic-bezier(.2,.85,.1,1) both;}
+    @keyframes rise{
+      from{opacity:0; transform: translateY(18px) scale(.98)}
+      to{opacity:1; transform: translateY(0) scale(1)}
+    }
+
+    .hero{
+      padding: 26px 22px 18px;
+      background:
+        radial-gradient(800px 280px at 20% 20%, rgba(125,211,252,.42), transparent 60%),
+        radial-gradient(800px 280px at 80% 40%, rgba(96,165,250,.32), transparent 60%),
+        linear-gradient(120deg, rgba(15,23,42,.04), rgba(15,23,42,.00));
+      border-bottom:1px solid rgba(15,23,42,.06);
+      position:relative;
+    }
+    .title{
+      display:flex;
+      flex-direction:column;
+      gap:6px;
+      align-items:flex-start;
+    }
+    .title h1{
+      margin:0;
+      font-size: 42px;
+      line-height: 1.05;
+      letter-spacing: .01em;
+    }
+    .title .sub{
+      color: rgba(15,23,42,.7);
+      font-weight: 600;
+      font-size: 14px;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+    }
+    .badge{
+      position:absolute;
+      right: 18px; top: 18px;
+      display:flex;
+      gap:8px;
+      align-items:center;
+      padding: 10px 12px;
+      border-radius:999px;
+      background: rgba(255,255,255,.7);
+      border:1px solid rgba(15,23,42,.08);
+      color: rgba(15,23,42,.78);
+      font-size: 13px;
+      backdrop-filter: blur(8px);
+    }
+    .badge b{color: rgba(15,23,42,.92)}
+    .content{
+      padding: 18px 22px 22px;
+      display:grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap: 14px;
+    }
+    @media (max-width: 820px){
+      .content{grid-template-columns: 1fr;}
+      .badge{position:static; margin-top:12px; width:fit-content}
+      .title h1{font-size: 38px}
+    }
+
+    .box{
+      border:1px solid rgba(15,23,42,.08);
+      border-radius: 18px;
+      padding: 14px 14px;
+      background: #fff;
+    }
+    .box h3{
+      margin: 0 0 10px 0;
+      font-size: 14px;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: rgba(15,23,42,.70);
+    }
+    .row{
+      display:flex;
+      gap:10px;
+      align-items:flex-start;
+      padding: 8px 0;
+      border-top: 1px dashed rgba(15,23,42,.10);
+    }
+    .row:first-of-type{border-top:none; padding-top:0}
+    .ico{
+      width: 34px; height: 34px;
+      border-radius: 12px;
+      background: rgba(96,165,250,.18);
+      display:grid; place-items:center;
+      flex: 0 0 auto;
+      border: 1px solid rgba(96,165,250,.20);
+    }
+    .label{font-weight: 740}
+    .text{color: rgba(15,23,42,.75); margin-top:2px; font-size: 14px; line-height:1.35}
+
+    .actions{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin-top: 10px;
+    }
+    .cta{
+      display:inline-flex;
+      gap:10px;
+      align-items:center;
+      border-radius: 999px;
+      border:1px solid rgba(15,23,42,.12);
+      background: rgba(96,165,250,.15);
+      padding: 11px 14px;
+      text-decoration:none;
+      color: rgba(15,23,42,.90);
+      font-weight: 700;
+      transition: transform .12s ease, filter .2s ease;
+    }
+    .cta:hover{transform: translateY(-1px); filter: brightness(1.02)}
+    .cta.secondary{background: rgba(15,23,42,.04)}
+    .cta small{font-weight: 700; color: rgba(15,23,42,.65)}
+
+    .foot{
+      padding: 14px 22px 22px;
+      color: rgba(15,23,42,.65);
+      font-size: 13px;
+      display:flex;
+      justify-content:space-between;
+      flex-wrap:wrap;
+      gap:10px;
+      border-top:1px solid rgba(15,23,42,.06);
+      background: rgba(15,23,42,.01);
+    }
+    .mono{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 12px;
+    }
+
+    .toast{
+      position:fixed;
+      left:50%; bottom:16px;
+      transform: translateX(-50%);
+      padding: 10px 12px;
+      border-radius: 999px;
+      background: rgba(15,23,42,.82);
+      color:#e2e8f0;
+      border:1px solid rgba(255,255,255,.15);
+      opacity:0;
+      pointer-events:none;
+      transition: opacity .25s ease, transform .25s ease;
+      font-size: 13px;
+      backdrop-filter: blur(10px);
+    }
+    .toast.show{
+      opacity:1;
+      transform: translateX(-50%) translateY(-4px);
+    }
+
+    /* reduced motion */
+    @media (prefers-reduced-motion: reduce){
+      .stars, .card.show{animation:none}
+      .flap{transition:none}
+      .btn:hover{transform:none}
+      .cta:hover{transform:none}
+    }
+  </style>
+</head>
+<body>
+  <div class="stars" aria-hidden="true"></div>
+
+  <div class="wrap">
+    <div class="topbar">
+      <div class="pill">
+        <span aria-hidden="true">💌</span>
+        <div>
+          <strong>Invitación interactiva</strong>
+          <div style="font-size:12px;opacity:.85">XV de Ailén</div>
+        </div>
+      </div>
+      <button class="btn small" id="toggleMusic" type="button" title="Música (opcional)">🎵 Música: Off</button>
+    </div>
+
+    <div class="stage">
+      <div class="hint" id="hint">
+        Tocá el sobre para abrir la invitación ✨<br>
+        <span style="opacity:.88">Tip: si querés música de fondo, subí un archivo <b>audio.mp3</b> en la misma carpeta.</span>
+      </div>
+
+      <div class="envelope" id="envelope" role="button" tabindex="0" aria-label="Abrir invitación">
+        <div class="env-base"></div>
+        <div class="env-paper"></div>
+
+        <div class="env-front">
+          <div class="flap" aria-hidden="true">
+            <svg viewBox="0 0 1000 520" preserveAspectRatio="none">
+              <defs>
+                <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0" stop-color="rgba(255,255,255,.30)"/>
+                  <stop offset="1" stop-color="rgba(255,255,255,.06)"/>
+                </linearGradient>
+              </defs>
+              <path d="M0,0 H1000 V520 L500,250 Z" fill="url(#g1)" stroke="rgba(255,255,255,.18)"/>
+            </svg>
+          </div>
+
+          <div class="seal" aria-hidden="true">
+            <span>XV AILÉN</span>
+          </div>
+        </div>
+      </div>
+
+      <section class="card" id="card" aria-live="polite">
+        <div class="hero">
+          <div class="title">
+            <div class="sub">Te invito a celebrar</div>
+            <h1>Ailén</h1>
+          </div>
+          <div class="badge">✨ <b>15 años</b> · Noche especial</div>
+        </div>
+
+        <div class="content">
+          <div class="box">
+            <h3>Detalles del evento</h3>
+
+            <div class="row">
+              <div class="ico" aria-hidden="true">📅</div>
+              <div>
+                <div class="label">Fecha y hora</div>
+                <div class="text">Sábado <b>31/01/2026</b> · <b>21:00 hs</b></div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="ico" aria-hidden="true">📍</div>
+              <div>
+                <div class="label">Lugar</div>
+                <div class="text"><b>Salón Aurora</b>, Tierras Negras, Pocito</div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="ico" aria-hidden="true">👗</div>
+              <div>
+                <div class="label">Código de vestimenta</div>
+                <div class="text">Formal. <b>Evitar tonos azul/celeste</b> en la ropa.</div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="ico" aria-hidden="true">✅</div>
+              <div>
+                <div class="label">Confirmación</div>
+                <div class="text">Por favor confirmar asistencia antes del <b>22/01/2026</b>.</div>
+
+                <div class="actions">
+                  <a class="cta" id="rsvp" href="#" target="_blank" rel="noopener">
+                    📲 Confirmar por WhatsApp
+                  </a>
+                  <a class="cta secondary" id="maps" href="#" target="_blank" rel="noopener">
+                    🗺️ Ver mapa <small>(Google Maps)</small>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="box">
+            <h3>Regalo</h3>
+
+            <div class="row">
+              <div class="ico" aria-hidden="true">💳</div>
+              <div>
+                <div class="label">Mercado Pago</div>
+                <div class="text">
+                  Alias: <b class="mono" id="alias">Ailen2011</b><br>
+                  CVU: <b class="mono" id="cvu">0000003100003191044042</b><br>
+                  Titular: <b>Ailén Noemi Reynes Bamondi</b>
+                </div>
+
+                <div class="actions">
+                  <button class="btn small" type="button" id="copyAlias">Copiar alias</button>
+                  <button class="btn small" type="button" id="copyCVU">Copiar CVU</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="ico" aria-hidden="true">🎶</div>
+              <div>
+                <div class="label">Canción de fondo (opcional)</div>
+                <div class="text">
+                  Si querés música, colocá un archivo llamado <b>audio.mp3</b> en la misma carpeta que este HTML y activá el botón “Música”.
+                  <br><span style="opacity:.85">Nota: por derechos de autor, no incluimos audio comercial dentro del proyecto.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="foot">
+          <div>💙 Gracias por ser parte de este momento.</div>
+          <div class="mono">Hecho para compartir por WhatsApp y embeber en Google Sites</div>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <div class="toast" id="toast">Copiado ✅</div>
+
+  <!-- Música opcional: poné un archivo "audio.mp3" junto a este HTML -->
+  <audio id="bgm" loop preload="none">
+    <source src="audio.mp3" type="audio/mpeg">
+  </audio>
+
+  <script>
+    // ====== CONFIGURACIÓN RÁPIDA ======
+    // Cambiá estos datos si hace falta:
+    const WHATSAPP_NUMBER = "5492645020319"; // sin "+" ni espacios
+    const WHATSAPP_MSG = encodeURIComponent("Hola! Confirmo asistencia a los XV de Ailén 😊");
+    const MAPS_URL = "https://www.google.com/maps/search/?api=1&query=Salon%20Aurora%20Tierras%20Negras%20Pocito";
+    // =================================
+
+    const envelope = document.getElementById("envelope");
+    const card = document.getElementById("card");
+    const hint = document.getElementById("hint");
+    const toast = document.getElementById("toast");
+
+    const rsvp = document.getElementById("rsvp");
+    const maps = document.getElementById("maps");
+
+    const bgm = document.getElementById("bgm");
+    const toggleMusic = document.getElementById("toggleMusic");
+    let musicOn = false;
+
+    // Set links
+    rsvp.href = `https://wa.me/${WHATSAPP_NUMBER}?text=${WHATSAPP_MSG}`;
+    maps.href = MAPS_URL;
+
+    function openInvite(){
+      envelope.classList.add("open");
+      setTimeout(()=>{ card.classList.add("show"); }, 520);
+      hint.style.opacity = .75;
+      hint.innerHTML = "Invitación abierta ✨<br><span style='opacity:.88'>Podés confirmar asistencia o ver el mapa desde los botones.</span>";
+    }
+
+    function handleOpen(){
+      if(!envelope.classList.contains("open")) openInvite();
+      else {
+        // scroll to card for mobile
+        card.scrollIntoView({behavior: "smooth", block: "start"});
+      }
+    }
+
+    envelope.addEventListener("click", handleOpen);
+    envelope.addEventListener("keydown", (e)=>{
+      if(e.key === "Enter" || e.key === " "){
+        e.preventDefault();
+        handleOpen();
+      }
+    });
+
+    function showToast(text){
+      toast.textContent = text;
+      toast.classList.add("show");
+      setTimeout(()=>toast.classList.remove("show"), 1200);
+    }
+
+    async function copyText(text){
+      try{
+        await navigator.clipboard.writeText(text);
+        showToast("Copiado ✅");
+      }catch(err){
+        // fallback
+        const ta = document.createElement("textarea");
+        ta.value = text;
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand("copy");
+        ta.remove();
+        showToast("Copiado ✅");
+      }
+    }
+
+    document.getElementById("copyAlias").addEventListener("click", ()=>{
+      copyText(document.getElementById("alias").textContent.trim());
+    });
+    document.getElementById("copyCVU").addEventListener("click", ()=>{
+      copyText(document.getElementById("cvu").textContent.trim());
+    });
+
+    // Música (opcional). Si no existe audio.mp3, el navegador no reproducirá nada.
+    async function setMusic(on){
+      musicOn = on;
+      toggleMusic.textContent = on ? "🎵 Música: On" : "🎵 Música: Off";
+      if(on){
+        try{
+          await bgm.play();
+          showToast("Música activada 🎶");
+        }catch(e){
+          // Autoplay suele bloquearse hasta interacción; el botón ya es interacción,
+          // pero algunos navegadores igual pueden fallar si no hay archivo.
+          showToast("No se pudo reproducir (¿existe audio.mp3?)");
+          musicOn = false;
+          toggleMusic.textContent = "🎵 Música: Off";
+        }
+      }else{
+        bgm.pause();
+      }
+    }
+
+    toggleMusic.addEventListener("click", ()=> setMusic(!musicOn));
+  </script>
+</body>
+</html>
