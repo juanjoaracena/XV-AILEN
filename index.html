@@ -20,6 +20,36 @@
     *{box-sizing:border-box}
     html,body{height:100%}
     body{
+      <!-- INTRO VIDEO -->
+<div id="introVideo" style="
+  position:fixed;
+  inset:0;
+  background:black;
+  z-index:9999;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-direction:column;
+">
+  <video autoplay muted playsinline style="width:100%;height:100%;object-fit:cover;">
+    <source src="video.mp4" type="video/mp4">
+  </video>
+
+  <button onclick="closeIntro()" style="
+    position:absolute;
+    bottom:40px;
+    padding:14px 26px;
+    border-radius:999px;
+    border:none;
+    font-size:16px;
+    font-weight:700;
+    background:rgba(255,255,255,0.9);
+    cursor:pointer;
+  ">
+    Abrir invitación ✨
+  </button>
+</div>
+
       margin:0;
       font-family: system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif;
       color:#e2e8f0;
@@ -385,7 +415,7 @@
     <div class="stage">
       <div class="hint" id="hint">
         Tocá el sobre para abrir la invitación ✨<br>
-        <span style="opacity:.88">Tip: si querés música de fondo, subí un archivo <b>audio.mp3</b> en la misma carpeta.</span>
+        <!-- <span style="opacity:.88">Tip: si querés música de fondo, subí un archivo <b>audio.mp3</b> en la misma carpeta.</span>-->
       </div>
 
       <div class="envelope" id="envelope" role="button" tabindex="0" aria-label="Abrir invitación">
@@ -489,10 +519,10 @@
             <div class="row">
               <div class="ico" aria-hidden="true">🎶</div>
               <div>
-                <div class="label">Canción de fondo (opcional)</div>
+                <!--<div class="label">Canción de fondo (opcional)</div>
                 <div class="text">
                   Si querés música, colocá un archivo llamado <b>audio.mp3</b> en la misma carpeta que este HTML y activá el botón “Música”.
-                  <br><span style="opacity:.85">Nota: por derechos de autor, no incluimos audio comercial dentro del proyecto.</span>
+                  <br><span style="opacity:.85">Nota: por derechos de autor, no incluimos audio comercial dentro del proyecto.</span>-->
                 </div>
               </div>
             </div>
@@ -501,7 +531,7 @@
 
         <div class="foot">
           <div>💙 Gracias por ser parte de este momento.</div>
-          <div class="mono">Hecho para compartir por WhatsApp y embeber en Google Sites</div>
+          <div class="mono">Hecho por LUCA Technologies</div>
         </div>
       </section>
     </div>
@@ -513,6 +543,15 @@
   <audio id="bgm" loop preload="none">
     <source src="audio.mp3" type="audio/mpeg">
   </audio>
+<script>
+  function closeIntro(){
+    const intro = document.getElementById("introVideo");
+    intro.style.opacity = "0";
+    setTimeout(() => {
+      intro.style.display = "none";
+    }, 500);
+  }
+</script>
 
   <script>
     // ====== CONFIGURACIÓN RÁPIDA ======
